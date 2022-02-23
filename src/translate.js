@@ -1,22 +1,24 @@
 "use strict";
 
+
+// 
 const translate = (word) => {
     const vowels = ["a","e","i","o","u"];
     let stringHolder = word.split("");
-    let firstIsVowel = false;
-    // Checks first letter of "word" against all vowels. Returns firstIsVowl: t or f
-    vowels.forEach((vowel)=> {if (stringHolder[0] === vowel) {firstIsVowel=true}});
+    let stringSegment = [];
+    let firstIsVowel = vowels.includes(stringHolder[0].toLowerCase());
 
     if (firstIsVowel === true) {
         "way".split("").forEach((letter)=> stringHolder.push(letter));
         return stringHolder.join("");
     } else {
-        let firstConsIndex = stringHolder.findIndex((letter,i)=> vowels.includes(letter));
-        
+        let firstConsIndex = stringHolder.findIndex((letter)=> vowels.includes(letter));
+        for (let i=0; i < firstConsIndex; i++){
+            stringSegment.push(stringHolder[i]);
+            stringHolder.shift();
+        }
+        return stringHolder.concat(stringSegment,"ay".split("")).join("");
     }
-
-    console.log(firstConsIndex);
 }
-translate("hippopotamus")
 
 module.exports = {translate}
