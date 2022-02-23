@@ -1,24 +1,28 @@
 "use strict";
-
+const vowels = ["a","e","i","o","u"];
 
 // 
 const translate = (word) => {
-    const vowels = ["a","e","i","o","u"];
     let stringHolder = word.split("");
-    let stringSegment = [];
     let firstIsVowel = vowels.includes(stringHolder[0].toLowerCase());
 
     if (firstIsVowel === true) {
         "way".split("").forEach((letter)=> stringHolder.push(letter));
         return stringHolder.join("");
     } else {
-        let firstConsIndex = stringHolder.findIndex((letter)=> vowels.includes(letter));
-        for (let i=0; i < firstConsIndex; i++){
-            stringSegment.push(stringHolder[i]);
-            stringHolder.shift();
-        }
-        return stringHolder.concat(stringSegment,"ay".split("")).join("");
+        return consonants(word);
     }
 }
 
-module.exports = {translate}
+const consonants = (word) => {
+    let consonantHolder = word.toLowerCase().split("");
+    let consonantSegment = [];
+    let firstConsIndex = consonantHolder.findIndex((letter)=> vowels.includes(letter));
+    for (let i=0; i < firstConsIndex; i++){
+        consonantSegment.push(consonantHolder[i].toLowerCase());
+    }
+    consonantHolder.splice(0,firstConsIndex);
+    return consonantHolder.concat(consonantSegment,"ay".split("")).join("");
+}
+
+module.exports = {translate,consonants}

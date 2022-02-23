@@ -1,4 +1,5 @@
-const {translate} = require("../src/translate");
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> LINKED FUNCTIONS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+const {translate,consonants} = require("../src/translate");
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ORIGIN ARRAYS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 const vowels = ["a","e","i","o","u"];
@@ -16,30 +17,72 @@ toLowerCase(consonantsUC,consonantsLC);
 toLowerCase(vowelWordsUC,vowelWordsLC);
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> TESTS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-describe("Translate to Pig-Latin", ()=> {
-    test("Does word starting with consonant translate properly?",()=>{
-        let result = translate("hippopotamus");
-        expect(result).toBe("ippopotamushay")
+describe(`Testing "consonants" function for use in "translate" function`, ()=> {
+    test(`Does translate work with one consonant in front?`,()=> {
+        let result = consonants("Gorilla");
+        expect(result).toBe("orillagay");
     })
-    // consonantsUC.forEach((word)=> {
-    //     let consonant = word.split("")[0];
-    //     test(`Does word starting with "${consonant}" translate properly?`,()=>{
-    //         let result = translate(`${word}`);
-    //         expect(result).toBe(`${word}way`)
-    //     })
-    // })
+    test(`Does translate work with one consonant in front again?`,()=> {
+        let result = consonants("bonkers");
+        expect(result).toBe("onkersbay");
+    })
+    test(`Does translate work with TWO consonants in front?`,()=> {
+        let result = consonants("Clank");
+        expect(result).toBe("ankclay");
+    })
+    test(`Does translate work with TWO consonants in front again?`,()=> {
+        let result = consonants("Drunk");
+        expect(result).toBe("unkdray");
+    })
+    test(`Does translate work with THREE consonants in front?`,()=> {
+        let result = consonants("sklizzy");
+        expect(result).toBe("izzysklay");
+    })
+    test(`Does translate work with FOUR consonants in front?`,()=> {
+        let result = consonants("MCGRAW");
+        expect(result).toBe("awmcgray");
+    })
+    test(`Does translate work with FIVE consonants in front?`,()=> {
+        let result = consonants("Psycho");
+        expect(result).toBe("opsychay");
+    })
+})
+
+// The vowel tests below are legit but the consonant tests basically only test if the function is diverting to "consonant" rather than "vowel" when it's supposed to. This is due to consonant() being called in the "expect to be" area.
+describe(`Testing "translate" function for consonants (Using consonant() for validation)`, ()=> {
+    test(`Does the word "Hippopotamus" translate properly?`,()=>{
+        let result = translate("Hippopotamus");
+        expect(result).toBe("ippopotamushay");
+    })
+    consonantsUC.forEach((word)=> {
+        let consonant = word.split("")[0];
+        test(`Does word starting with "${consonant}" translate properly?`,()=>{
+            let result = translate(`${word}`);
+            expect(result).toBe(`${consonants(word)}`);
+        })
+    })
+    consonantsLC.forEach((word)=> {
+        let consonant = word.split("")[0];
+        test(`Does word starting with "${consonant}" translate properly?`,()=>{
+            let result = translate(`${word}`);
+            expect(result).toBe(`${consonants(word)}`);
+        })
+    })
+})
+
+describe(`Testing "translate" function for vowels`, ()=> {
     vowelWordsUC.forEach((word)=> {
         let vowel = word.split("")[0];
         test(`Does word starting with "${vowel}" translate properly?`,()=>{
             let result = translate(`${word}`);
-            expect(result).toBe(`${word}way`)
+            expect(result).toBe(`${word}way`);
         })
     })
     vowelWordsLC.forEach((word)=> {
         let vowel = word.split("")[0];
         test(`Does word starting with "${vowel}" translate properly?`,()=>{
             let result = translate(`${word}`);
-            expect(result).toBe(`${word}way`)
+            expect(result).toBe(`${word}way`);
         })
     })
 })
